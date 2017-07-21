@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+    <head>
+
+        <title>Implement the Commanding Pattern</title>
+
+        <style>
+
+    html body {
+        font-family: Quicksand, sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: red;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+
+
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ <meta name="generator" content="Hugo 0.25.1" />
+
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Implement the Commanding Pattern</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="https://github.com/musonza/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/tnash263/"><i class="fa fa-twitter"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://www.linkedin.com/in/srfullstackdeveloper/"><i class="fa fa-linkedin"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+
+        <h4><a href="/post/command-pattern/">Implement the Commanding Pattern</a></h4>
+
+        <h5>July 19, 2017</h5>
+
+         <kbd class="item-tag">PHP</kbd>  <kbd class="item-tag">OOP</kbd>  <kbd class="item-tag">DDD</kbd> 
+
+    
+
+</div>
+
+
+    <br> <div class="text-justify">
+
+<h2 id="what-is-the-command-pattern">What is the Command Pattern</h2>
+
+<p>Wikipedia definition:</p>
+
+<blockquote>
+<p>In object oriented programming, the command pattern is a behavioral design pattern in which an object is used to encapsulate all information needed to perform an action or trigger an event at a later time.</p>
+</blockquote>
+
+<p>The information that is encapsulated in a commanding object includes the method name, the object that owns the method and values for the method parameters. So in other words the commanding object will have enough information to carry out an action immediately or later on.</p>
+
+<h2 id="example-usage">Example Usage</h2>
+
+<p>Let’s take for example the method below that sends a message to other users in a conversation in a chat application.</p>
+
+<p><br/></p>
+
+<pre><code class="language-php">/**
+ * Sends a message
+ *
+ * @param Conversation $conversation
+ * @param array $data contains message body and any other relevant information
+ * @param User $sender
+ *
+ */
+public function send($conversation, $data, $sender)
+{
+    //Step 1. Send a message by adding the $sender message to the $conversation
+    
+    //Step 2. Maybe we are sending a huge file and would rather que that for processing and let the other part of an incoming file
+
+    //Step 3. Send a push notification to each user in the $conversation
+
+    //Step 4. Send an email notification to each user in the $conversation
+
+    //Step 5. Store notifications in the database for each user in the $conversation
+
+    //Step 6. Tell the sender that their message has been sent
+}
+</code></pre>
+
+<p>We could start coding our application and implement all the steps listed above in the <code>send()</code> function. However, by doing that we are well on our way to writing code that is not efficient and may not be easy to maintain. For instance, the is no reason why Step 4 above should wait for items like sending notifications. What if we can move all those steps somewhere else, that&rsquo;s where the Commanding pattern can help us.</p>
+
+<p>So let’s attempt to use the commanding pattern instead.</p>
+
+<pre><code class="language-php">&lt;?php
+
+namespace Musonza\Chat;
+
+use Musonza\Chat\Commanding\CommandHandler;
+use Musonza\Chat\Messages\SendMessageCommand;
+
+class Chat {
+
+    public function send($conversation, $data, $sender)
+    {
+        //$this-&gt;message refers to Message model
+        $command = new SendMessageCommand($conversation, $this-&gt;message, $data, $sender);
+
+        //CommandHandler
+        $this-&gt;commandHandler-&gt;handle($command);
+    }
+    
+}
+</code></pre>
+
+<p>In the function above we are encapsulating all information needed to send a message in the SendMessageCommand object.</p>
+
+<p>Let’s take a look at the <code>SendMessageCommand</code> class:</p>
+
+<p><br/></p>
+
+<h4 id="a-name-sendmessagecommand-a-sendmessagecommand"><a name="SendMessageCommand"></a>SendMessageCommand</h4>
+
+<p><br/></p>
+
+<pre><code class="language-php">&lt;?php
+
+namespace Musonza\Chat\Messages;
+
+use Musonza\Chat\Commanding\Command;
+
+class SendMessageCommand implements Command
+{
+    public $sender;
+    public $body;
+    public $conversation;
+    
+    public function __construct($conversation, $message, $body, $senderId)
+    {
+        $this-&gt;conversation = $conversation;
+        $this-&gt;message      = $message;
+        $this-&gt;data         = $data;
+        $this-&gt;sender       = $sender;
+    }
+    
+    public function execute()
+    {
+        $this-&gt;message-&gt;send($this-&gt;conversation, $this-&gt;data, $this-&gt;sender);
+    }
+    
+}
+</code></pre>
+
+<p>As you can see from the command constructor, we are setting the values for parameters that we need to perform our action of sending a message.</p>
+
+<p>Below is our interface that all our commands will implement. That way we are sure each command has an <code>execute()</code> method.</p>
+
+<pre><code class="language-php">&lt;?php
+
+namespace Musonza\Chat\Commanding;
+
+/** The Command interface */
+interface Command {
+   public function execute();
+}
+</code></pre>
+
+<p><br/></p>
+
+<h4 id="a-name-commandhandler-a-commandhandler"><a name="CommandHandler"></a>CommandHandler</h4>
+
+<pre><code class="language-php">&lt;?php
+
+namespace Musonza\Chat\Commanding;
+
+/** The Invoker class */
+class CommandHandler {
+   public function handle($command) {
+      //here we can store the command or do anything else
+      $command.execute();
+   }
+}
+</code></pre>
+
+<h2 id="summary">Summary</h2>
+
+<p>These are the steps we took in sending our chat message using the commanding pattern.</p>
+
+<ol>
+<li><p>We made a call to the <code>send()</code> function with all the required information to send a message</p></li>
+
+<li><p>We passed on that information to the Commanding object <code>SendMessageCommand</code>.</p>
+
+<ul>
+<li>Now the commanding object knows the information needed to send a new message</li>
+<li>We can push this commanding object to a que for later execution or we can execute right away</li>
+</ul></li>
+
+<li><p>We then made a call to <a href="#CommandHandler"><code>CommandHandler</code></a> method <code>handle()</code> which would cause the commanding object to call it&rsquo;s execution method.</p></li>
+</ol>
+
+<p>In our case when the execution method is called we send the message by making this call:</p>
+
+<p><code>$this-&gt;message-&gt;send($this-&gt;conversation, $this-&gt;data, $this-&gt;sender);</code></p>
+
+<p><b>Note:</b> The code presented here is shortened. Feel free to <a href="https://github.com/musonza/chat" target="__blank">checkout a Laravel Package</a> I created that implements the commanding pattern.</p>
+</div>
+
+    
+    
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; Tinashe Musonza. All rights reserved.</p>
+
+        </footer>
+
+    </body>
+
+</html>
+
